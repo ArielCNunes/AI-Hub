@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { IonicModule } from '@ionic/angular';  // Import standalone Ionic
-import { NavbarComponent } from './components/navbar/navbar.component';  // Import standalone Navbar
+import { IonicModule } from '@ionic/angular';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,  // Standalone component
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [RouterOutlet, IonicModule, NavbarComponent]  // Import other standalone components
+  imports: [
+    RouterOutlet,
+    IonicModule,   // Import IonicModule to use Ionic components
+    NavbarComponent
+  ]
 })
 export class AppComponent { }

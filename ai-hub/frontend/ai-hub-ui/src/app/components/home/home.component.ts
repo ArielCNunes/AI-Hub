@@ -4,10 +4,10 @@ import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
+  imports: [
+    IonicModule,   // Import IonicModule to use Ionic components
+  ]
 })
-export class HomeComponent {
-
-}
+export class HomeComponent { }
