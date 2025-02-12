@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonApp } from '@ionic/angular/standalone';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
@@ -10,8 +10,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   styleUrls: ['./app.component.css'],
   imports: [
     RouterOutlet,
-    IonicModule,   // Import IonicModule to use Ionic components
-    NavbarComponent
+    NavbarComponent,
+    IonApp
   ]
 })
 export class AppComponent { }
