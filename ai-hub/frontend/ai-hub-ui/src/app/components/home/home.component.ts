@@ -1,20 +1,12 @@
 import { Component } from '@angular/core';
-import {
-  IonButton, IonContent, IonCard, IonCardContent, IonCardTitle, IonCardHeader
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [
-    IonButton,
-    IonContent,
-    IonCard,
-    IonCardContent,
-    IonCardTitle,
-    IonCardHeader
-  ]
+  imports: [IonicModule, RouterModule]
 })
 export class HomeComponent { }
