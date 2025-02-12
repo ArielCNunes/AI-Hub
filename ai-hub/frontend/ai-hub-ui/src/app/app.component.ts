@@ -7,7 +7,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
   imports: [
     RouterOutlet,
     NavbarComponent,
