@@ -1,14 +1,16 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import { routes } from './app/app.routes';
+import { provideRouter } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { environment } from './app/environments/environment';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
-    provideRouter(routes)
-  ],
-});
+    provideRouter([]), // Ensure routes are properly configured
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth())
+  ]
+}).catch(err => console.error(err));
