@@ -1,1 +1,14 @@
-<p>chat works!</p>
+<div class="chat-container">
+    <div class="messages">
+        <div *ngFor="let message of chatHistory" [ngClass]="message.role">
+            <strong *ngIf="message.role === 'user'">You:</strong>
+            <strong *ngIf="message.role === 'assistant'">AI:</strong>
+            {{ message.content }}
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" [(ngModel)]="userMessage" placeholder="Type a message...">
+        <button (click)="sendMessage()">Send</button>
+    </div>
+</div>
