@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { IonApp } from '@ionic/angular/standalone';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   imports: [
     RouterOutlet,
     NavbarComponent,
-    IonApp
+    IonApp,
+    CommonModule
   ]
 })
 export class AppComponent { }
