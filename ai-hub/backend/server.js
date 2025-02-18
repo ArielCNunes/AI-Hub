@@ -10,8 +10,8 @@ app.use(express.json());
 
 // Sync the database (Creates tables if they don't exist)
 sequelize.sync()
-    .then(() => console.log("✅ Database synced!"))
-    .catch(err => console.error("❌ Database sync failed:", err));
+    .then(() => console.log("Database synced!"))
+    .catch(err => console.error("Database sync failed:", err));
 
 app.get('/', (req, res) => {
     res.send('Hello from Express.js API!');
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 // Route to save a new chat message
 app.post('/api/chat', async (req, res) => {
     const { userId, message, response } = req.body;
-    
+
     try {
         const chat = await Chat.create({ userId, message, response });
         res.status(201).json(chat);
@@ -32,7 +32,7 @@ app.post('/api/chat', async (req, res) => {
 // Route to get all chat messages for a user
 app.get('/api/chat/:userId', async (req, res) => {
     const { userId } = req.params;
-    
+
     try {
         const chats = await Chat.findAll({ where: { userId } });
         res.status(200).json(chats);
@@ -44,7 +44,7 @@ app.get('/api/chat/:userId', async (req, res) => {
 // Route to delete all chat messages for a user
 app.delete('/api/chat/:userId', async (req, res) => {
     const { userId } = req.params;
-    
+
     try {
         await Chat.destroy({ where: { userId } });
         res.status(200).json({ message: "Chat history deleted" });
@@ -54,4 +54,4 @@ app.delete('/api/chat/:userId', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
