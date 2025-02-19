@@ -1,20 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
-const sequelize = require('./config/database'); // Import database
-const Chat = require('./models/Chat'); // Import Chat model
+const mongoose = require('mongoose');
+const Chat = require('./models/Chat');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Sync the database (Creates tables if they don't exist)
-sequelize.sync()
-    .then(() => console.log("Database synced!"))
-    .catch(err => console.error("Database sync failed:", err));
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/ai-hub', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB connected!"))
+.catch(err => console.error("MongoDB connection failed:", err));
 
+// Test route
 app.get('/', (req, res) => {
-    res.send('Hello from Express.js API!');
+    res.send('Hello from Express.js API with MongoDB!');
 });
 
 // Route to save a new chat message
@@ -22,7 +25,8 @@ app.post('/api/chat', async (req, res) => {
     const { userId, message, response } = req.body;
 
     try {
-        const chat = await Chat.create({ userId, message, response });
+        const chat = new Chat({ userId, message, response });
+        await chat.save();
         res.status(201).json(chat);
     } catch (error) {
         res.status(500).json({ error: "Error saving chat" });
@@ -34,7 +38,7 @@ app.get('/api/chat/:userId', async (req, res) => {
     const { userId } = req.params;
 
     try {
-        const chats = await Chat.findAll({ where: { userId } });
+        const chats = await Chat.find({ userId });
         res.status(200).json(chats);
     } catch (error) {
         res.status(500).json({ error: "Error retrieving chat history" });
@@ -46,12 +50,13 @@ app.delete('/api/chat/:userId', async (req, res) => {
     const { userId } = req.params;
 
     try {
-        await Chat.destroy({ where: { userId } });
+        await Chat.deleteMany({ userId });
         res.status(200).json({ message: "Chat history deleted" });
     } catch (error) {
         res.status(500).json({ error: "Error deleting chat history" });
     }
 });
 
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,27 +1,9 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-// Define the Chat model
-const Chat = sequelize.define('Chat', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    userId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    message: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-    response: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-}, {
-    timestamps: true,  // Automatically adds createdAt and updatedAt timestamps
+const chatSchema = new mongoose.Schema({
+    user: { type: String, required: true },
+    message: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = Chat;
+module.exports = mongoose.model('Chat', chatSchema);
