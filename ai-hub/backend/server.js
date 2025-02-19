@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/ai-hub', {
+mongoose.connect('mongodb+srv://admin:admin@ai-hub.kbvd9.mongodb.net/?retryWrites=true&w=majority&appName=AI-Hub', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
