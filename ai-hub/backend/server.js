@@ -12,8 +12,8 @@ mongoose.connect('mongodb+srv://admin:admin@ai-hub.kbvd9.mongodb.net/?retryWrite
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log("MongoDB connected!"))
-.catch(err => console.error("MongoDB connection failed:", err));
+    .then(() => console.log("MongoDB connected!"))
+    .catch(err => console.error("MongoDB connection failed:", err));
 
 // Test route
 app.get('/', (req, res) => {
