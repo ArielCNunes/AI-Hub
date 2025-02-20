@@ -18,4 +18,4 @@ The tech stack for this project includes:
 - **Firebase** – for user authentication and registration.
 
 ### Database
-- **MySQL** – for saving and retrieving chat history (hosted on **Railway**).
+- **MongoDB** – for saving and retrieving chat history (hosted on **MongoDB Atlas**).
