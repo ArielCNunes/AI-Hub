@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { IonApp } from '@ionic/angular/standalone';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
     RouterOutlet,
     NavbarComponent,
     IonApp,
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class AppComponent { }
