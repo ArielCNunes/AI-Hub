@@ -2,10 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Chat = require('./models/Chat');
+const chatRoutes = require('./routes/chatRoutes');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/api/chats', chatRoutes);
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://admin:admin@ai-hub.kbvd9.mongodb.net/?retryWrites=true&w=majority&appName=AI-Hub', {
