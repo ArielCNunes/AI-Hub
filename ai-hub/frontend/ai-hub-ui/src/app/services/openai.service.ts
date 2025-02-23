@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 })
 export class OpenAIService {
   private apiUrl = 'https://api.openai.com/v1/chat/completions';
-  private apiKey = environment.openaiApiKey; // Replace with your actual API key
+  private apiKey = environment.openaiApiKey; // API key stored in environment.ts (hidden from source control)
 
   constructor(private http: HttpClient) {}
 
