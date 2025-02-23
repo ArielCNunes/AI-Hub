@@ -16,7 +16,7 @@ export class ChatComponent {
   userMessage: string = '';
   chatHistory: { role: string, content: string }[] = [];
 
-  constructor(private openAIService: OpenAIService) {}
+  constructor(private openAIService: OpenAIService) { }
 
   sendMessage() {
     if (!this.userMessage.trim()) return;

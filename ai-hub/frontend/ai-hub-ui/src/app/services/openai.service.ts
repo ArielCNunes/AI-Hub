@@ -10,7 +10,7 @@ export class OpenAIService {
   private apiUrl = 'https://api.openai.com/v1/chat/completions';
   private apiKey = environment.openaiApiKey; // API key stored in environment.ts (hidden from source control)
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   sendMessage(message: string): Observable<any> {
     const body = {
