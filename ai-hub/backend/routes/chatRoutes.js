@@ -3,7 +3,7 @@ const Chat = require('../models/Chat');
 
 const router = express.Router();
 
-// POST endpoint to save a chat to mongoDB
+// POST endpoint to store a chat
 router.post('/', async (req, res) => {
     const { userId, message, response } = req.body;
 
