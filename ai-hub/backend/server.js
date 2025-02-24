@@ -12,8 +12,8 @@ mongoose.connect('mongodb+srv://admin:admin@ai-hub.kbvd9.mongodb.net/?retryWrite
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log("MongoDB connected!"))
-.catch(err => console.error("MongoDB connection failed:", err));
+    .then(() => console.log("MongoDB connected!"))
+    .catch(err => console.error("MongoDB connection failed:", err));
 
 // Test route
 app.get('/', (req, res) => {
@@ -24,5 +24,5 @@ app.get('/', (req, res) => {
 app.use('/api/chats', chatRoutes);
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
