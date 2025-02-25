@@ -1,13 +1,27 @@
 import { Injectable } from '@angular/core';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseEnvironment } from '../environments/firebaseEnvironment';
+import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private auth = getAuth(initializeApp(firebaseEnvironment.firebaseConfig));
+    private currentUser: User | null = null;
+
+    constructor() {
+        setPersistence(this.auth, browserLocalPersistence)
+            .then(() => {
+                onAuthStateChanged(this.auth, (user) => {
+                    this.currentUser = user;
+                });
+            })
+            .catch((error) => {
+                console.error('Failed to set persistence:', error);
+            });
+    }
 
     // User Sign Up
     async signUp(email: string, password: string): Promise<User | null> {
@@ -42,6 +56,6 @@ export class AuthService {
 
     // Get Current User
     getCurrentUser(): User | null {
-        return this.auth.currentUser;
+        return this.currentUser;
     }
 }
