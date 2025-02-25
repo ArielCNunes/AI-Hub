@@ -2,8 +2,9 @@
     <ion-toolbar>
         <ion-title>AI Hub</ion-title>
         <ion-buttons slot="end">
-            <ion-button routerLink="/">Home</ion-button>
+            <ion-button routerLink="/home">Home</ion-button>
             <ion-button routerLink="/chat">Chat</ion-button>
+            <ion-button *ngIf="isLoggedIn" (click)="logout()">Logout</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
