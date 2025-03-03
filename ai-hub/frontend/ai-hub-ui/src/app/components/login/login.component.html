@@ -1,15 +1,47 @@
-<div class="auth-container">
-    <h1>Login</h1>
-    <form (ngSubmit)="login()">
-        <label for="email">Email</label>
-        <input type="email" [(ngModel)]="email" name="email" required />
+<ion-content class="ion-padding">
+    <div class="login-container">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Login</ion-card-title>
+            </ion-card-header>
 
-        <label for="password">Password</label>
-        <input type="password" [(ngModel)]="password" name="password" required />
+            <ion-card-content>
+                <form (ngSubmit)="login()" #loginForm="ngForm">
 
-        <button type="submit">Login</button>
-        <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
-    </form>
+                    <!-- Email Input -->
+                    <ion-item>
+                        <ion-label position="floating">Email</ion-label>
+                        <ion-input type="email" [(ngModel)]="email" name="email" required clearInput>
+                        </ion-input>
+                    </ion-item>
 
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-</div>
+                    <!-- Password Input -->
+                    <ion-item>
+                        <ion-label position="floating">Password</ion-label>
+                        <ion-input type="password" [(ngModel)]="password" name="password" required clearInput>
+                        </ion-input>
+                    </ion-item>
+
+                    <!-- Error Message -->
+                    <p *ngIf="errorMessage" class="error-message">
+                        {{ errorMessage }}
+                    </p>
+
+                    <!-- Login Button -->
+                    <ion-button expand="block" type="submit" color="primary" [disabled]="!loginForm.valid">
+                        Login
+                    </ion-button>
+
+                    <!-- Sign Up Link -->
+                    <div class="signup-link">
+                        <p>Don't have an account?
+                            <ion-button fill="clear" routerLink="/signup" color="secondary">
+                                Sign up
+                            </ion-button>
+                        </p>
+                    </div>
+                </form>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
