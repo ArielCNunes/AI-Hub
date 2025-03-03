@@ -1,45 +1,56 @@
 <ion-content class="ion-padding">
-    <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-        <!-- Email  -->
-        <ion-item>
-            <ion-label>Email</ion-label>
-            <ion-input type="email" name="email" [(ngModel)]="email" required placeholder="Email">
-            </ion-input>
-        </ion-item>
+    <div class="signup-container">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Sign Up</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+                <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
 
-        <!-- Password  -->
-        <ion-item>
-            <ion-label>Password</ion-label>
-            <ion-input type="password" name="password" [(ngModel)]="password" required placeholder="Password">
-            </ion-input>
-        </ion-item>
+                    <!-- Email -->
+                    <ion-item>
+                        <ion-input type="email" name="email" [(ngModel)]="email" required placeholder="Email"
+                            clearInput>
+                        </ion-input>
+                    </ion-item>
 
-        <!-- Confirm Password  -->
-        <ion-item>
-            <ion-label>Confirm Password</ion-label>
-            <ion-input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required
-                placeholder="Confirm Password">
-            </ion-input>
-        </ion-item>
+                    <!-- Password -->
+                    <ion-item>
+                        <ion-input type="password" name="password" [(ngModel)]="password" required
+                            placeholder="Password" clearInput>
+                        </ion-input>
+                    </ion-item>
 
-        <!-- Error Message -->
-        <ion-item *ngIf="errorMessage" lines="none">
-            <ion-text color="danger">
-                {{ errorMessage }}
-            </ion-text>
-        </ion-item>
+                    <!-- Confirm Password -->
+                    <ion-item>
+                        <ion-input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required
+                            placeholder="Confirm Password" clearInput>
+                        </ion-input>
+                    </ion-item>
 
-        <!-- Submit Button -->
-        <ion-button expand="block" type="submit" [disabled]="!signupForm.form.valid">
-            Sign Up
-        </ion-button>
+                    <!-- Error Message -->
+                    <ion-item *ngIf="errorMessage" lines="none">
+                        <ion-text color="danger">
+                            {{ errorMessage }}
+                        </ion-text>
+                    </ion-item>
 
-        <!-- Login Link in case user already has an account -->
-        <ion-item lines="none">
-            <ion-text>
-                Already have an account?
-                <a routerLink="/login">Login</a>
-            </ion-text>
-        </ion-item>
-    </form>
+                    <!-- Submit Button -->
+                    <ion-button expand="block" type="submit" color="primary" [disabled]="!signupForm.form.valid">
+                        Sign Up
+                    </ion-button>
+
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        <p>Already have an account?
+                            <ion-button fill="clear" routerLink="/login" color="secondary">
+                                Log in
+                            </ion-button>
+                        </p>
+                    </div>
+                </form>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>
