@@ -8,4 +8,4 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
-module.exports = mongoose.model('Chat', chatSchema);
+module.exports = mongoose.model('Chat', userSchema);
