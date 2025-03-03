@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   imports: [CommonModule, FormsModule, RouterLink, IonicModule],
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';
