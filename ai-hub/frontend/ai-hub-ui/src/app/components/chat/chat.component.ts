@@ -57,7 +57,7 @@ export class ChatComponent {
     this.userId = currentUser?.uid || null;
 
     if (this.userId) {
-      this.loadChatHistory(); // Load only if user ID exists
+      this.loadChatHistory();
     } else {
       console.error('No user logged in');
     }
