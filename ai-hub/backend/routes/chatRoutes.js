@@ -20,10 +20,16 @@ router.post('/', async (req, res) => {
     }
 });
 
-// GET endpoint to fetch all chats
+// GET endpoint to fetch chats for a user
 router.get('/', async (req, res) => {
+    const userId = req.query.userId;
+
+    if (!userId) {
+        return res.status(400).json({ error: 'User ID is required.' });
+    }
+
     try {
-        const chats = await Chat.find().sort({ createdAt: -1 });
+        const chats = await Chat.find({ userId }).sort({ createdAt: -1 });
         res.json(chats);
     } catch (err) {
         res.status(500).json({ error: err.message });
