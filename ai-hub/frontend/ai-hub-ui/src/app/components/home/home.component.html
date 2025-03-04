@@ -1,12 +1,6 @@
-<ion-content>
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>AI Hub</ion-card-title>
-            <h1>Welcome, {{ user.email }}!</h1>
-        </ion-card-header>
-        <ion-card-content>
-            <p>Chat with AI using different models.</p>
-            <ion-button expand="full" routerLink="/chat">Start Chatting</ion-button>
-        </ion-card-content>
-    </ion-card>
-</ion-content>
+<div class="home-container">
+    <h2>Choose an AI Model</h2>
+    <div class="card" (click)="startNewChat()">
+        <img src="assets/chatgpt-logo.png" alt="ChatGPT Logo" class="card-logo" />
+    </div>
+</div>

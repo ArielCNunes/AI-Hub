@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,9 +13,13 @@ import { AuthService } from '../../services/auth.service';
 export class HomeComponent implements OnInit {
   user: any = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
+  }
+
+  startNewChat() {
+    this.router.navigate(['/chat'], { queryParams: { newChat: true } });
   }
 }
