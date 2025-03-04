@@ -4,11 +4,14 @@ import { OpenAIService } from '../../services/openai.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { send } from 'ionicons/icons';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -21,7 +24,9 @@ export class ChatComponent {
     private http: HttpClient,
     private openAIService: OpenAIService,
     private authService: AuthService
-  ) { }
+  ) {
+    addIcons({ send });
+  }
 
   sendMessage() {
     if (!this.userMessage.trim()) return;
