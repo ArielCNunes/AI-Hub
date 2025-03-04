@@ -1,7 +1,9 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>AI Hub</ion-title>
-        <ion-buttons slot="end">
+        <ion-title class="centered-title">AI-Hub</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons class="centered-buttons">
             <ion-button routerLink="/home">Home</ion-button>
             <ion-button routerLink="/chat">Chat</ion-button>
             <ion-button *ngIf="isLoggedIn" (click)="logout()">Logout</ion-button>

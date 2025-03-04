@@ -1,0 +1,17 @@
+.centered-title {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.centered-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+ion-toolbar {
+  --background: var(--ion-background-color);
+  border-bottom: 1px solid #ccc;
+}
