@@ -1,38 +1,70 @@
-.chat-container {
-    max-width: 500px;
-    margin: 0 auto;
+.messages {
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    padding-bottom: 80px; 
 }
 
-.messages {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
+.message-bubble {
+    margin-bottom: 16px;
+    width: 100%;
+    display: flex;
 }
 
 .user {
-    text-align: right;
-    color: blue;
+    justify-content: flex-end;
 }
 
 .assistant {
-    text-align: left;
-    color: green;
+    justify-content: flex-start;
 }
 
-.chat-input {
-    display: flex;
-    gap: 10px;
+.user ion-card, .assistant ion-card {
+    max-width: 80%;
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 20px 20px 60px #c4c3c3;
 }
 
-input {
-    flex-grow: 1;
-    padding: 5px;
+.user ion-card {
+    background-color: #ffffff;
 }
 
-button {
-    padding: 5px 10px;
+.assistant ion-card {
+    background-color: #050505;
+    color: #ffffff;
+}
+
+.message-bubble:last-child {
+    margin-bottom: 80px;
+}
+
+ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+ion-toolbar {
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+}
+
+ion-input {
+    --background: #ebe5e5;
+    --border-radius: 8px;
+    --padding-start: 20px;
+}
+
+ion-button {
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    background-color: black;
 }

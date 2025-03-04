@@ -1,14 +1,26 @@
-<div class="chat-container">
+<ion-content class="chat-content">
     <div class="messages">
-        <div *ngFor="let message of chatHistory" [ngClass]="message.role">
-            <strong *ngIf="message.role === 'user'">You:</strong>
-            <strong *ngIf="message.role === 'assistant'">AI:</strong>
-            {{ message.content }}
+        <div *ngFor="let message of chatHistory" [ngClass]="message.role" class="message-bubble">
+            <ion-card>
+                <ion-card-content>
+                    <strong *ngIf="message.role === 'user'">You:</strong>
+                    <strong *ngIf="message.role === 'assistant'">AI:</strong>
+                    {{ message.content }}
+                </ion-card-content>
+            </ion-card>
         </div>
     </div>
+</ion-content>
 
-    <div class="chat-input">
-        <input type="text" [(ngModel)]="userMessage" placeholder="Type a message...">
-        <button (click)="sendMessage()">Send</button>
-    </div>
-</div>
+<ion-footer>
+    <ion-toolbar>
+        <ion-item>
+            <ion-input type="text" [(ngModel)]="userMessage" placeholder="Type a message..." class="message-input"
+                (keyup.enter)="sendMessage()">
+            </ion-input>
+            <ion-button slot="end" (click)="sendMessage()" color="primary">
+                <ion-icon name="send"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-toolbar>
+</ion-footer>
