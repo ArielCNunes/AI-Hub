@@ -1,3 +1,4 @@
 # API Keys
 ai-hub/frontend/ai-hub-ui/src/app/environments/environment.ts
 ai-hub/frontend/ai-hub-ui/src/app/environments/firebaseEnvironment.ts
+ai-hub/backend/.env
