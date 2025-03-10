@@ -3,5 +3,12 @@
     "@capacitor/android": "^7.0.1",
     "@capacitor/cli": "^7.0.1",
     "@capacitor/core": "^7.0.1"
+  },
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build --configuration production",
+    "serve": "ng serve",
+    "test": "ng test",
+    "lint": "ng lint"
   }
 }
