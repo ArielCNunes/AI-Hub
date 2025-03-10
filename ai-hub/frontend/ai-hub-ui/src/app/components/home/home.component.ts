@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     this.user = this.authService.getCurrentUser();
   }
 
-  startNewChat() {
-    this.router.navigate(['/chat'], { queryParams: { newChat: true } });
+  startNewChat(model: 'openai' | 'claude') {
+    this.router.navigate(['/chat'], { queryParams: { model } });
   }
 }

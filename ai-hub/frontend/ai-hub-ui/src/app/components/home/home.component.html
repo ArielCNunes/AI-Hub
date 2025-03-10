@@ -1,10 +1,22 @@
-<ion-content>
-    <ion-card>
-        <ion-card-header>
-            <h1>Welcome, {{ user.email }}!</h1>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-button expand="full" routerLink="/chat">Start Chatting</ion-button>
-        </ion-card-content>
-    </ion-card>
+<ion-content class="home-content">
+    <ion-grid>
+        <ion-row>
+            <ion-card (click)="startNewChat('openai')" class="chat-card">
+                <ion-card-header>
+                    <ion-card-title>ChatGPT</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <p>OpenAI's GPT-3</p>
+                </ion-card-content>
+            </ion-card>
+            <ion-card (click)="startNewChat('claude')" class="chat-card">
+                <ion-card-header>
+                    <ion-card-title>Claude</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <p>Anthropic's AI model</p>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+    </ion-grid>
 </ion-content>
