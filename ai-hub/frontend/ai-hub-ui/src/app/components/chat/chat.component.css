@@ -1,12 +1,16 @@
 .messages {
-    padding: 16px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px; 
+    padding-bottom: 80px;
+    /* Padding to accommodate the dropdown and input field */
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+    /* Ensure messages don't overflow the screen */
 }
 
 .message-bubble {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     width: 100%;
     display: flex;
 }
@@ -19,7 +23,8 @@
     justify-content: flex-start;
 }
 
-.user ion-card, .assistant ion-card {
+.user ion-card,
+.assistant ion-card {
     max-width: 80%;
     margin: 0;
     border-radius: 10px;
@@ -36,13 +41,17 @@
 }
 
 .message-bubble:last-child {
-    margin-bottom: 80px;
+    margin-bottom: 5px;
+    /* Avoid overlapping with footer elements */
 }
 
 ion-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 10;
+    background-color: white;
+    /* Ensure the footer is not transparent */
 }
 
 ion-toolbar {
@@ -55,16 +64,25 @@ ion-item {
     --padding-end: 16px;
     --padding-top: 8px;
     --padding-bottom: 8px;
+    flex: 1;
+    /* Ensure dropdown and input share space */
 }
 
 ion-input {
     --background: #ebe5e5;
     --border-radius: 8px;
     --padding-start: 20px;
+    flex: 1;
 }
 
 ion-button {
     --padding-top: 8px;
     --padding-bottom: 8px;
     background-color: black;
+    flex-shrink: 0;
+}
+
+ion-select {
+    /* Drop down menu doesn't overlap other elements */
+    flex: 0.5;
 }
