@@ -15,10 +15,17 @@
 <ion-footer>
     <ion-toolbar>
         <ion-item>
+            <ion-label>Choose an AI model</ion-label>
+            <ion-select [(ngModel)]="selectedAIModel" interface="popover">
+                <ion-select-option value="openai">Chat GPT</ion-select-option>
+                <ion-select-option value="claude">Claude</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
             <ion-input type="text" [(ngModel)]="userMessage" placeholder="Type a message..." class="message-input"
-                (keyup.enter)="sendMessage()">
+                (keyup.enter)="sendMessage(selectedAIModel)">
             </ion-input>
-            <ion-button slot="end" (click)="sendMessage()" color="black">
+            <ion-button slot="end" (click)="sendMessage(selectedAIModel)" color="black">
                 <ion-icon name="send"></ion-icon>
             </ion-button>
         </ion-item>
