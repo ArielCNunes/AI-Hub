@@ -9,6 +9,10 @@
     /* Ensure messages don't overflow the screen */
 }
 
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
 .message-bubble {
     margin-bottom: 10px;
     width: 100%;
