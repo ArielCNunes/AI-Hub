@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { OpenAIService } from '../../services/openai.service';
 import { ClaudeService } from '../../services/claude.service';
 import { AuthService } from '../../services/auth.service';
@@ -24,12 +25,18 @@ export class ChatComponent {
   selectedAIModel: string = 'openai';
 
   constructor(
+    private route: ActivatedRoute,
     private http: HttpClient,
     private openAIService: OpenAIService,
     private claudeService: ClaudeService,
     private authService: AuthService
   ) {
     addIcons({ send });
+
+    // Set the selected AI model
+    this.route.queryParams.subscribe(params => {
+      this.selectedAIModel = params['model'] || 'openai';
+    });
   }
 
   ngOnInit() {
