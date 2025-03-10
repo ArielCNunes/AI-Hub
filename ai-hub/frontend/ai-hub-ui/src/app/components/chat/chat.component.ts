@@ -18,10 +18,10 @@ import { send } from 'ionicons/icons';
 })
 export class ChatComponent {
   userMessage: string = '';
-  chatHistory: { role: string, content: string }[] = [];
-  userId: string | null = null;
-  message: string = '';
   response: string = '';
+  userId: string | null = null;
+  chatHistory: { role: string, content: string }[] = [];
+  selectedAIModel: string = 'openai';
 
   constructor(
     private http: HttpClient,
@@ -32,71 +32,7 @@ export class ChatComponent {
     addIcons({ send });
   }
 
-  sendMessageToClaude() {
-    if (!this.userMessage.trim()) return;
-
-    this.chatHistory.push({ role: 'user', content: this.userMessage });
-
-    this.claudeService.sendMessage(this.userMessage).subscribe({
-      next: (res) => {
-        // Get the first response from Claude
-        const aiMessage = res?.content?.[0]?.text || 'No response from Claude';
-        this.chatHistory.push({ role: 'assistant', content: aiMessage });
-
-        const chatData = {
-          userId: this.userId,
-          message: this.userMessage,
-          response: aiMessage
-        };
-
-        this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
-          next: () => console.log('Claude chat saved successfully'),
-          error: (err) => console.error('Failed to save Claude chat:', err)
-        });
-
-        this.userMessage = '';
-      },
-      error: (err) => {
-        console.error('Error communicating with Claude API:', err);
-        this.chatHistory.push({
-          role: 'assistant',
-          content: 'Error communicating with Claude API'
-        });
-      },
-    });
-  }
-
-  sendMessage() {
-    if (!this.userMessage.trim()) return;
-
-    // Add user message to chat history
-    this.chatHistory.push({ role: 'user', content: this.userMessage });
-
-    // Send user message to OpenAI
-    this.openAIService.sendMessage(this.userMessage).subscribe(response => {
-      // Extract the response from the API response
-      const aiMessage = response.choices[0].message.content;
-      this.chatHistory.push({ role: 'assistant', content: aiMessage });
-
-      // Store chat in MongoDB
-      const chatData = {
-        userId: this.userId,
-        message: this.userMessage,
-        response: aiMessage
-      };
-
-      this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
-        next: () => console.log('Chat saved successfully'),
-        error: (err) => console.error('Failed to save chat:', err)
-      });
-
-      // Clear input field
-      this.userMessage = '';
-    });
-  }
-
   ngOnInit() {
-    // Get the currently logged-in user's ID
     const currentUser = this.authService.getCurrentUser();
     this.userId = currentUser?.uid || null;
 
@@ -107,10 +43,57 @@ export class ChatComponent {
     }
   }
 
+  // Send message to AI model
+  sendMessage(selectedAIModel: string) {
+    if (!this.userMessage.trim()) return;
+
+    this.chatHistory.push({ role: 'user', content: this.userMessage });
+    const userMessage = this.userMessage;
+    this.userMessage = '';
+
+    if (selectedAIModel === 'claude') {
+      this.claudeService.sendMessage(userMessage).subscribe({
+        next: (res) => {
+          const aiMessage = res?.content?.[0]?.text || 'No response from Claude';
+          this.chatHistory.push({ role: 'assistant', content: aiMessage });
+          this.saveChat(userMessage, aiMessage);
+        },
+        error: (err) => {
+          console.error('Error communicating with Claude API:', err);
+          this.chatHistory.push({ role: 'assistant', content: 'Error communicating with Claude API' });
+        }
+      });
+    } else {
+      this.openAIService.sendMessage(userMessage).subscribe({
+        next: (response) => {
+          const aiMessage = response.choices[0].message.content;
+          this.chatHistory.push({ role: 'assistant', content: aiMessage });
+          this.saveChat(userMessage, aiMessage);
+        },
+        error: (err) => {
+          console.error('Error communicating with OpenAI API:', err);
+          this.chatHistory.push({ role: 'assistant', content: 'Error communicating with OpenAI API' });
+        }
+      });
+    }
+  }
+
+  private saveChat(message: string, response: string) {
+    const chatData = {
+      userId: this.userId,
+      message,
+      response
+    };
+
+    this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
+      next: () => console.log('Chat saved successfully'),
+      error: (err) => console.error('Failed to save chat:', err)
+    });
+  }
+
   loadChatHistory() {
     this.http.get<any[]>(`http://localhost:5001/api/chats?userId=${this.userId}`).subscribe({
       next: (chats) => {
-        // Transform the chat data into a flat array of messages
         this.chatHistory = chats.map(chat => [
           { role: 'user', content: chat.message },
           { role: 'assistant', content: chat.response }
