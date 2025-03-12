@@ -16,14 +16,42 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   async login() {
-    const user = await this.authService.signIn(this.email, this.password);
-    if (user) {
+    this.email = this.email.trim();
+
+    // Check if email exists
+    if (!this.email) {
+      this.errorMessage = 'Email cannot be empty.';
+      return;
+    }
+
+    // Check if email is valid
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailPattern.test(this.email)) {
+      this.errorMessage = 'Please enter a valid email address.';
+      return;
+    }
+
+    // Check if password exists
+    if (!this.password) {
+      this.errorMessage = 'Password cannot be empty.';
+      return;
+    }
+
+    // Check if password is at least 6 characters
+    if (this.password.length < 6) {
+      this.errorMessage = 'Password must be at least 6 characters.';
+      return;
+    }
+
+    // Log in user
+    const result = await this.authService.signIn(this.email, this.password);
+    if (result.user) {
       this.router.navigate(['/chat']);
     } else {
-      this.errorMessage = 'Failed to login. Please check your credentials.';
+      this.errorMessage = result.error || 'Sign in failed. Please try again.';
     }
   }
 }

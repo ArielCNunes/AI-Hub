@@ -21,36 +21,51 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   async onSubmit() {
-    // Get rid of leading/trailing whitespace
     this.email = this.email.trim();
 
-    // Validate email so Firebase doesn't throw an error
+    // Check if email exists
+    if (!this.email) {
+      this.errorMessage = 'Email cannot be empty.';
+      return;
+    }
+
+    // Check if email is valid
     const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     if (!emailPattern.test(this.email)) {
-      this.errorMessage = 'Please enter a valid email address';
+      this.errorMessage = 'Please enter a valid email address.';
       return;
     }
 
-    // Check password
+    // Check if password exists
+    if (!this.password || !this.confirmPassword) {
+      this.errorMessage = 'Please enter and confirm your password.';
+      return;
+    }
+
+    // Check if password is at least 6 characters long
+    if (this.password.length < 6) {
+      this.errorMessage = 'Password must be at least 6 characters.';
+      return;
+    }
+
+    // Check if passwords match
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    } else if (this.password.length < 6) {
-      this.errorMessage = 'Password must be at least 6 characters';
+      this.errorMessage = 'Passwords do not match.';
       return;
     }
 
-    // Attempt to sign up
-    try {
-      const user = await this.authService.signUp(this.email, this.password);
-      if (user) {
-        this.router.navigate(['/login']); // Redirect to login page
-      } else {
-        this.errorMessage = 'Sign up failed. Please try again.';
-      }
-    } catch (error) {
-      console.error('Error during sign-up:', error);
-      this.errorMessage = 'An error occurred. Please try again later.';
+    // Check if email does not already exist before signing up
+    if (await this.authService.isEmailTaken(this.email)) {
+      this.errorMessage = 'This email is already registered. Try logging in instead.';
+      return;
+    }
+
+    // Sign up user
+    const result = await this.authService.signUp(this.email, this.password);
+    if (result.user) {
+      this.router.navigate(['/login']);
+    } else {
+      this.errorMessage = result.error || 'Sign up failed. Please try again.';
     }
   }
 }
