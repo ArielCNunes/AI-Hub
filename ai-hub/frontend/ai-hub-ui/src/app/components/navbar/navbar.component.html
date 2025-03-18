@@ -5,7 +5,6 @@
     <ion-toolbar>
         <ion-buttons class="centered-buttons">
             <ion-button routerLink="/home">Home</ion-button>
-            <ion-button routerLink="/chat">Chats</ion-button>
             <ion-button *ngIf="isLoggedIn" (click)="logout()">Logout</ion-button>
         </ion-buttons>
     </ion-toolbar>
