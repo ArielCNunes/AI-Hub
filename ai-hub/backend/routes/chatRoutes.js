@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const chats = await Chat.find({ userId }).sort({ createdAt: -1 });
+        const chats = await Chat.find({ userId }).sort({ createdAt: 1 });
         res.json(chats);
     } catch (err) {
         res.status(500).json({ error: err.message });
