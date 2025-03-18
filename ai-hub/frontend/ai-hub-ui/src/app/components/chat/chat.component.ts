@@ -21,6 +21,7 @@ export class ChatComponent {
   userMessage: string = '';
   response: string = '';
   userId: string | null = null;
+  conversationId: string | null = null;
   chatHistory: { role: string, content: string }[] = [];
   selectedAIModel: string = 'openai';
 
@@ -36,6 +37,7 @@ export class ChatComponent {
     // Set the selected AI model
     this.route.queryParams.subscribe(params => {
       this.selectedAIModel = params['model'] || 'openai';
+      this.conversationId = params['conversationId'] || null;
     });
   }
 
@@ -88,6 +90,7 @@ export class ChatComponent {
   private saveChat(message: string, response: string) {
     const chatData = {
       userId: this.userId,
+      conversationId: this.conversationId,
       message,
       response
     };
@@ -99,7 +102,7 @@ export class ChatComponent {
   }
 
   loadChatHistory() {
-    this.http.get<any[]>(`http://localhost:5001/api/chats?userId=${this.userId}`).subscribe({
+    this.http.get<any[]>(`http://localhost:5001/api/chats?userId=${this.userId}&conversationId=${this.conversationId}`).subscribe({
       next: (chats) => {
         this.chatHistory = chats.map(chat => [
           { role: 'user', content: chat.message },
