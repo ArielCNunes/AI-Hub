@@ -5,14 +5,14 @@ const router = express.Router();
 
 // POST endpoint to store a chat
 router.post('/', async (req, res) => {
-    const { userId, message, response } = req.body;
+    const { userId, conversationId, message, response } = req.body;
 
-    if (!userId || !message || !response) {
-        return res.status(400).json({ error: 'All fields (userId, message, response) are required.' });
+    if (!userId || !conversationId || !message || !response) {
+        return res.status(400).json({ error: 'All fields (userId, conversationId, message, response) are required.' });
     }
 
     try {
-        const newChat = new Chat({ userId, message, response });
+        const newChat = new Chat({ userId, conversationId, message, response });
         await newChat.save();
         res.status(201).json(newChat);
     } catch (err) {
@@ -20,16 +20,16 @@ router.post('/', async (req, res) => {
     }
 });
 
-// GET endpoint to fetch chats for a user
+// GET endpoint to fetch chats for a conversation
 router.get('/', async (req, res) => {
-    const userId = req.query.userId;
+    const { userId, conversationId } = req.query;
 
-    if (!userId) {
-        return res.status(400).json({ error: 'User ID is required.' });
+    if (!userId || !conversationId) {
+        return res.status(400).json({ error: 'User ID and Conversation ID are required.' });
     }
 
     try {
-        const chats = await Chat.find({ userId }).sort({ createdAt: 1 });
+        const chats = await Chat.find({ userId, conversationId }).sort({ createdAt: 1 });
         res.json(chats);
     } catch (err) {
         res.status(500).json({ error: err.message });
