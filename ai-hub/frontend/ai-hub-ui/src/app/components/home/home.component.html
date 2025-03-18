@@ -1,23 +1,18 @@
 <ion-content class="home-content">
-    <ion-grid>
-        <ion-row>
-            <ion-col size="12" *ngFor="let conv of conversations">
-                <!-- Navigate to the specific conversation chat page -->
-                <ion-card (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })"
-                    class="chat-card">
-                    <ion-card-header>
-                        <ion-card-title>{{ conv.title }}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <!-- Date of the conversation -->
-                        <p>Started: {{ conv.createdAt | date: 'short' }}</p>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <!-- Conversations list -->
+    <ion-list>
+        <ion-item *ngFor="let conv of conversations"
+            (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })">
+            <ion-label>
+                <h2>{{ conv.title }}</h2>
+                <p>Started: {{ conv.createdAt | date: 'short' }}</p>
+            </ion-label>
+            <ion-icon slot="end"></ion-icon>
+        </ion-item>
+    </ion-list>
 
-    <ion-fab vertical="bottom" horizontal="end">
+    <!-- New chat button -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="startNewChat()" color="primary">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
