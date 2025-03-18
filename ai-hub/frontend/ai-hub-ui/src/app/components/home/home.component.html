@@ -1,22 +1,25 @@
 <ion-content class="home-content">
     <ion-grid>
         <ion-row>
-            <ion-card (click)="startNewChat('openai')" class="chat-card">
-                <ion-card-header>
-                    <ion-card-title>ChatGPT</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                    <p>OpenAI's GPT-3</p>
-                </ion-card-content>
-            </ion-card>
-            <ion-card (click)="startNewChat('claude')" class="chat-card">
-                <ion-card-header>
-                    <ion-card-title>Claude</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                    <p>Anthropic's AI model</p>
-                </ion-card-content>
-            </ion-card>
+            <ion-col size="12" *ngFor="let conv of conversations">
+                <!-- Navigate to the specific conversation chat page -->
+                <ion-card (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })"
+                    class="chat-card">
+                    <ion-card-header>
+                        <ion-card-title>{{ conv.title }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <!-- Date of the conversation -->
+                        <p>Started: {{ conv.createdAt | date: 'short' }}</p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
         </ion-row>
     </ion-grid>
+
+    <ion-fab vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="startNewChat()" color="primary">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
