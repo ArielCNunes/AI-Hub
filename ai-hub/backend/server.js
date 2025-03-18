@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const chatRoutes = require('./routes/chatRoutes');
 const claudeRoutes = require('./routes/claudeRoutes');
+const conversationRoutes = require('./routes/conversationRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 // Use chat routes
 app.use('/api/chats', chatRoutes);
 app.use('/api/claude', claudeRoutes);
+app.use('/api/conversations', conversationRoutes);
 
 // Start the server
 const PORT = 5001;
