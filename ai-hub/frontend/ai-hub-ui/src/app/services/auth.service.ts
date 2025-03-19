@@ -3,7 +3,6 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { initializeApp } from 'firebase/app';
 import { firebaseEnvironment } from '../environments/firebaseEnvironment';
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
-import e from 'express';
 
 @Injectable({
     providedIn: 'root',
