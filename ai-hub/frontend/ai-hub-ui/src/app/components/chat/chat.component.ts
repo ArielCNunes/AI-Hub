@@ -96,7 +96,7 @@ export class ChatComponent {
     };
 
     this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
-      next: () => console.log('Chat saved successfully'),
+      next: () => console.log('Chat saved successfully. Model:' + this.selectedAIModel),
       error: (err) => console.error('Failed to save chat:', err)
     });
   }
