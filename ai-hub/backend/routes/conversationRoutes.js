@@ -35,4 +35,22 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Update a conversation
+router.patch('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+
+    try {
+        const updateFields = {};
+        if (title !== undefined) updateFields.title = title;
+
+        const updated = await Conversation.findByIdAndUpdate(id, updateFields, { new: true });
+        if (!updated) return res.status(404).json({ error: 'Conversation not found.' });
+
+        res.json(updated);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

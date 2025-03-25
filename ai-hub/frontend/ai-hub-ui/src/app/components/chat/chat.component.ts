@@ -60,6 +60,11 @@ export class ChatComponent {
     const userMessage = this.userMessage;
     this.userMessage = '';
 
+    if (this.chatHistory.length === 1) {
+      const title = userMessage.length > 50 ? userMessage.slice(0, 47) + '...' : userMessage;
+      this.updateConversationTitle(title);
+    }
+
     if (selectedAIModel === 'claude') {
       this.claudeService.sendMessage(userMessage).subscribe({
         next: (res) => {
@@ -110,6 +115,15 @@ export class ChatComponent {
         ]).flat();
       },
       error: (err) => console.error('Failed to load chat history:', err)
+    });
+  }
+
+  private updateConversationTitle(title: string) {
+    if (!this.conversationId) return;
+
+    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { title }).subscribe({
+      next: () => console.log('Conversation title updated'),
+      error: (err) => console.error('Failed to update conversation title:', err)
     });
   }
 }
