@@ -49,7 +49,7 @@ export class LoginComponent {
     // Log in user
     const result = await this.authService.signIn(this.email, this.password);
     if (result.user) {
-      this.router.navigate(['/chat']);
+      this.router.navigate(['/home']);
     } else {
       this.errorMessage = result.error || 'Sign in failed. Please try again.';
     }
