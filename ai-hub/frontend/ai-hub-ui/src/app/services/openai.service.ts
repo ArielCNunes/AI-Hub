@@ -25,4 +25,24 @@ export class OpenAIService {
 
     return this.http.post(this.apiUrl, body, { headers });
   }
+
+  /**
+   * Sends a custom array of messages to the OpenAI Chat API.
+   * This method allows for full control over the message history,
+   * including system prompts, user/assistant roles, and multi-turn context.
+   */
+  sendCustomMessage(messages: { role: string, content: string }[]): Observable<any> {
+    // Define the body structure with model and messages
+    const body = {
+      model: 'gpt-3.5-turbo',
+      messages
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.apiKey}`
+    };
+
+    return this.http.post(this.apiUrl, body, { headers });
+  }
 }

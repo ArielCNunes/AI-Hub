@@ -5,7 +5,8 @@
             (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })">
             <ion-label>
                 <h2>{{ conv.title }}</h2>
-                <p>Started: {{ conv.createdAt | date: 'short' }}</p>
+                <p style="color: blue;" *ngIf="conv.summary">{{ conv.summary }}</p>
+                <p>Started on {{ conv.createdAt | date: 'short' }}</p>
             </ion-label>
             <ion-icon slot="end"></ion-icon>
         </ion-item>

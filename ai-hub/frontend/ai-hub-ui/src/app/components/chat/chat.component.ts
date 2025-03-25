@@ -65,12 +65,23 @@ export class ChatComponent {
       this.updateConversationTitle(title);
     }
 
+    // Check if the selected AI model is Claude
     if (selectedAIModel === 'claude') {
+      // Sending the message to Claude
       this.claudeService.sendMessage(userMessage).subscribe({
+        // Handling the response from Claude
         next: (res) => {
+          // Extracting the message from Claude's response
           const aiMessage = res?.content?.[0]?.text || 'No response from Claude';
           this.chatHistory.push({ role: 'assistant', content: aiMessage });
+
+          // Saving the message to chat history
           this.saveChat(userMessage, aiMessage);
+
+          // Triggering summary generation as the conversation progresses
+          if (this.chatHistory.length > 1) {
+            this.generateAndSaveConversationSummary();
+          }
         },
         error: (err) => {
           console.error('Error communicating with Claude API:', err);
@@ -78,11 +89,21 @@ export class ChatComponent {
         }
       });
     } else {
+      // Sending the message to OpenAI
       this.openAIService.sendMessage(userMessage).subscribe({
+        // Handling the response from OpenAI
         next: (response) => {
+          // Extracting the message from OpenAI's response
           const aiMessage = response.choices[0].message.content;
           this.chatHistory.push({ role: 'assistant', content: aiMessage });
+
+          // Saving the message to chat history
           this.saveChat(userMessage, aiMessage);
+
+          // Triggering summary generation as the conversation progresses
+          if (this.chatHistory.length > 1) {
+            this.generateAndSaveConversationSummary();
+          }
         },
         error: (err) => {
           console.error('Error communicating with OpenAI API:', err);
@@ -124,6 +145,48 @@ export class ChatComponent {
     this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { title }).subscribe({
       next: () => console.log('Conversation title updated'),
       error: (err) => console.error('Failed to update conversation title:', err)
+    });
+  }
+
+  // Generate and save a summary of the conversation using OpenAI
+  private generateAndSaveConversationSummary() {
+    // AI will follow this prompt to generate the summary
+    const systemPrompt = "Summarize this conversation in one short sentence. " +
+      "Be as short and objective as possible. " +
+      "Use third person to refer to the user and assistant. " +
+      "Start with 'User wants to...' or 'User asked about...' (a variation of these)'" +
+      "Limit to 15 words.";
+
+    // Combine the system prompt with the chat history
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      ...this.chatHistory
+    ];
+
+    // Send the prompt and history to OpenAI and subscribe to the response
+    this.openAIService.sendCustomMessage(messages).subscribe({
+      next: (response) => {
+        // Extract the summary from the OpenAI response
+        const summary = response.choices[0].message.content;
+
+        // Save the generated summary to the conversation
+        this.updateConversationSummary(summary);
+      },
+      error: (err) => console.error('Failed to generate summary:', err)
+    });
+  }
+
+  /**
+   * Updates the summary field of the current conversation in the backend.
+   * Called after a summary is generated from OpenAI to persist it to MongoDB.
+   */
+  private updateConversationSummary(summary: string) {
+    if (!this.conversationId) return;
+
+    // API call to update conversation summary in backend
+    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { summary }).subscribe({
+      next: () => console.log('Summary saved'),
+      error: (err) => console.error('Failed to save summary:', err)
     });
   }
 }

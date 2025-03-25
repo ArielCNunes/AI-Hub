@@ -35,15 +35,19 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Update a conversation
+// This route updates the title and/or summary of a conversation identified by its ID
 router.patch('/:id', async (req, res) => {
+    // Extracting route parameters and request body
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, summary } = req.body;
 
+    // Preparing fields to update
     try {
         const updateFields = {};
         if (title !== undefined) updateFields.title = title;
+        if (summary !== undefined) updateFields.summary = summary;
 
+        // Executing the update and handling not-found or error cases
         const updated = await Conversation.findByIdAndUpdate(id, updateFields, { new: true });
         if (!updated) return res.status(404).json({ error: 'Conversation not found.' });
 
