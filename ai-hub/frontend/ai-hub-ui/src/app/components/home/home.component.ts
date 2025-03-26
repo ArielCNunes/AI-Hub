@@ -36,7 +36,10 @@ export class HomeComponent implements OnInit {
   // Creates a new conversation and navigates to chat page
   startNewChat() {
     if (this.user) {
-      this.http.post<any>('http://localhost:5001/api/conversations', { userId: this.user.uid })
+      this.http.post<any>('http://localhost:5001/api/conversations', {
+        userId: this.user.uid,
+        aiModel: 'openai'
+      })
         .subscribe({
           next: (newConv) => {
             this.router.navigate(['/chat'], { queryParams: { conversationId: newConv._id } });

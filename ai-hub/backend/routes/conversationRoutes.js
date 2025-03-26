@@ -4,14 +4,14 @@ const Conversation = require('../models/Conversation');
 
 // Create a new conversation
 router.post('/', async (req, res) => {
-    const { userId } = req.body;
+    const { userId, aiModel } = req.body;
 
     if (!userId) {
         return res.status(400).json({ error: 'User ID is required.' });
     }
 
     try {
-        const conversation = new Conversation({ userId });
+        const conversation = new Conversation({ userId, aiModel });
         await conversation.save();
         res.status(201).json(conversation);
     } catch (err) {
@@ -39,19 +39,34 @@ router.get('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     // Extracting route parameters and request body
     const { id } = req.params;
-    const { title, summary } = req.body;
+    const { title, summary, aiModel } = req.body;
 
     // Preparing fields to update
     try {
         const updateFields = {};
         if (title !== undefined) updateFields.title = title;
         if (summary !== undefined) updateFields.summary = summary;
+        if (aiModel !== undefined) updateFields.aiModel = aiModel;
 
         // Executing the update and handling not-found or error cases
         const updated = await Conversation.findByIdAndUpdate(id, updateFields, { new: true });
         if (!updated) return res.status(404).json({ error: 'Conversation not found.' });
 
         res.json(updated);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get a single conversation by ID
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const conversation = await Conversation.findById(id);
+        if (!conversation) return res.status(404).json({ error: 'Conversation not found.' });
+
+        res.json(conversation);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

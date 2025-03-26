@@ -16,7 +16,8 @@
     <ion-toolbar>
         <ion-item>
             <ion-label>Choose an AI model</ion-label>
-            <ion-select [(ngModel)]="selectedAIModel" interface="popover">
+            <ion-select [(ngModel)]="selectedAIModel" interface="popover"
+                (ionChange)="updateAIModel($event.detail.value)">
                 <ion-select-option value="openai">Chat GPT</ion-select-option>
                 <ion-select-option value="claude">Claude</ion-select-option>
             </ion-select>

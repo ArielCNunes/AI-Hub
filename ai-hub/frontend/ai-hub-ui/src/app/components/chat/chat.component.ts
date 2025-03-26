@@ -47,6 +47,7 @@ export class ChatComponent {
 
     if (this.userId) {
       this.loadChatHistory();
+      this.loadConversationInfo();
     } else {
       console.error('No user logged in');
     }
@@ -187,6 +188,32 @@ export class ChatComponent {
     this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { summary }).subscribe({
       next: () => console.log('Summary saved'),
       error: (err) => console.error('Failed to save summary:', err)
+    });
+  }
+
+  private loadConversationInfo() {
+    if (!this.conversationId) return;
+
+    this.http.get<any>(`http://localhost:5001/api/conversations/${this.conversationId}`).subscribe({
+      next: (conversation) => {
+        this.selectedAIModel = conversation.aiModel || 'openai';
+      },
+      error: (err) => {
+        console.error('Failed to load conversation info:', err);
+      }
+    });
+  }
+
+  public updateAIModel(model: string) {
+    this.selectedAIModel = model;
+
+    if (!this.conversationId) return;
+
+    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, {
+      aiModel: model
+    }).subscribe({
+      next: () => console.log('AI model updated to:', model),
+      error: (err) => console.error('Failed to update AI model:', err)
     });
   }
 }
