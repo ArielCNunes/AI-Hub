@@ -5,8 +5,12 @@
             (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })">
             <ion-label>
                 <h2>{{ conv.title }}</h2>
-                <p style="color: blue;" *ngIf="conv.summary"><b>Last prompt:</b> {{ conv.summary }}</p>
+                <p style="color: blue;" *ngIf="conv.summary"><b></b> {{ conv.summary }}</p>
                 <p>Started on {{ conv.createdAt | date: 'short' }}</p>
+                <ion-chip *ngIf="conv.tokens > 0" color="warning" style="margin-top: 4px;">
+                    <ion-icon name="flame-outline" color="warning"></ion-icon>
+                    <ion-label>{{ conv.tokens | number }} tokens used</ion-label>
+                </ion-chip>
             </ion-label>
             <ion-icon slot="end"></ion-icon>
             <ion-button fill="clear" slot="end" color="danger"
