@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Conversation = require('../models/Conversation');
+const Chat = require('../models/Chat');
 
 // Create a new conversation
 router.post('/', async (req, res) => {
@@ -67,6 +68,22 @@ router.get('/:id', async (req, res) => {
         if (!conversation) return res.status(404).json({ error: 'Conversation not found.' });
 
         res.json(conversation);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete a conversation and its associated chats
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await Chat.deleteMany({ conversationId: id });
+        const deleted = await Conversation.findByIdAndDelete(id);
+
+        if (!deleted) return res.status(404).json({ error: 'Conversation not found.' });
+
+        res.sendStatus(204);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

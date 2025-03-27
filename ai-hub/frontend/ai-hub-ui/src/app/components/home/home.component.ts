@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
+import { add, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   conversations: any[] = [];
 
   constructor(private authService: AuthService, public router: Router, private http: HttpClient) {
-    addIcons({ add });
+    addIcons({ add, trashOutline });
   }
 
   // On component initialisation, load user and fetch conversations
@@ -45,6 +45,18 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/chat'], { queryParams: { conversationId: newConv._id } });
           },
           error: (err) => console.error('Failed to create conversation:', err)
+        });
+    }
+  }
+
+  deleteConversation(conversationId: string) {
+    if (confirm('Are you sure you want to delete this conversation?')) {
+      this.http.delete(`http://localhost:5001/api/conversations/${conversationId}`)
+        .subscribe({
+          next: () => {
+            this.conversations = this.conversations.filter(conv => conv._id !== conversationId);
+          },
+          error: (err) => console.error('Failed to delete conversation:', err)
         });
     }
   }

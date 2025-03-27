@@ -9,6 +9,10 @@
                 <p>Started on {{ conv.createdAt | date: 'short' }}</p>
             </ion-label>
             <ion-icon slot="end"></ion-icon>
+            <ion-button fill="clear" slot="end" color="danger"
+                (click)="deleteConversation(conv._id); $event.stopPropagation();">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
         </ion-item>
     </ion-list>
 
