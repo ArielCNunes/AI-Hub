@@ -1,6 +1,0 @@
-{
-  "appId": "com.ariel.aihub",
-  "appName": "AI Hub",
-  "webDir": "dist/ai-hub-ui/browser",
-  "bundledWebRuntime": false
-}
