@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
               .subscribe({
                 next: () => {
                   this.conversations = this.conversations.filter(conv => conv._id !== conversationId);
+                  console.log('Conversation deleted');
                 },
                 error: (err) => console.error('Failed to delete conversation:', err)
               });
