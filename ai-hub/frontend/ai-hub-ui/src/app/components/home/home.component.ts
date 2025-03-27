@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { add, trashOutline } from 'ionicons/icons';
+import { add, trashOutline, flameOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   conversations: any[] = [];
 
   constructor(private authService: AuthService, public router: Router, private http: HttpClient, private alertController: AlertController) {
-    addIcons({ add, trashOutline });
+    addIcons({ add, trashOutline, flameOutline });
   }
 
   // On component initialisation, load user and fetch conversations

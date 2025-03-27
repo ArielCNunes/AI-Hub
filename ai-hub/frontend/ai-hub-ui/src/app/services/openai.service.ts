@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -23,7 +24,12 @@ export class OpenAIService {
       'Authorization': `Bearer ${this.apiKey}`
     };
 
-    return this.http.post(this.apiUrl, body, { headers });
+    return this.http.post<any>(this.apiUrl, body, { headers }).pipe(
+      map(res => ({
+        message: res.choices[0].message.content,
+        tokens: res.usage?.total_tokens ?? 0
+      }))
+    );
   }
 
   /**

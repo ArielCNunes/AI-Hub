@@ -95,11 +95,10 @@ export class ChatComponent {
         // Handling the response from OpenAI
         next: (response) => {
           // Extracting the message from OpenAI's response
-          const aiMessage = response.choices[0].message.content;
+          const aiMessage = response.message;
+          const tokens = response.tokens;
           this.chatHistory.push({ role: 'assistant', content: aiMessage });
-
-          // Saving the message to chat history
-          this.saveChat(userMessage, aiMessage);
+          this.saveChat(userMessage, aiMessage, tokens);
 
           // Triggering summary generation as the conversation progresses
           if (this.chatHistory.length > 1) {
@@ -114,12 +113,13 @@ export class ChatComponent {
     }
   }
 
-  private saveChat(message: string, response: string) {
+  private saveChat(message: string, response: string, tokens: number = 0) {
     const chatData = {
       userId: this.userId,
       conversationId: this.conversationId,
       message,
-      response
+      response,
+      tokens
     };
 
     this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
@@ -156,7 +156,7 @@ export class ChatComponent {
       "Be as short and objective as possible. " +
       "Use third person to refer to the user and assistant. " +
       "Start with 'User wants to...' or 'User asked about...' (a variation of these)'" +
-      "Limit to 15 words.";
+      "Limit to 10 words and do not include your response.";
 
     // Combine the system prompt with the chat history
     const messages = [
