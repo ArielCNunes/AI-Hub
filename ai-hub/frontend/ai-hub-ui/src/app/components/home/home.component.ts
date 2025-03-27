@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add, trashOutline } from 'ionicons/icons';
 
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   user: any = null; // Stores current user info
   conversations: any[] = [];
 
-  constructor(private authService: AuthService, public router: Router, private http: HttpClient) {
+  constructor(private authService: AuthService, public router: Router, private http: HttpClient, private alertController: AlertController) {
     addIcons({ add, trashOutline });
   }
 
@@ -49,15 +50,31 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  deleteConversation(conversationId: string) {
-    if (confirm('Are you sure you want to delete this conversation?')) {
-      this.http.delete(`http://localhost:5001/api/conversations/${conversationId}`)
-        .subscribe({
-          next: () => {
-            this.conversations = this.conversations.filter(conv => conv._id !== conversationId);
-          },
-          error: (err) => console.error('Failed to delete conversation:', err)
-        });
-    }
+  async deleteConversation(conversationId: string) {
+    const alert = await this.alertController.create({
+      header: 'Delete Chat',
+      message: 'Are you sure you want to delete this conversation?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.http.delete(`http://localhost:5001/api/conversations/${conversationId}`)
+              .subscribe({
+                next: () => {
+                  this.conversations = this.conversations.filter(conv => conv._id !== conversationId);
+                },
+                error: (err) => console.error('Failed to delete conversation:', err)
+              });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
