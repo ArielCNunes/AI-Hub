@@ -12,6 +12,11 @@
         </ion-item>
     </ion-list>
 
+    <!-- Message to be displayed when there are no chats -->
+    <ion-text color="medium" *ngIf="conversations.length === 0">
+        <p style="text-align: center; margin-top: 2rem;">No conversations yet. Start a new chat!</p>
+    </ion-text>
+
     <!-- New chat button -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="startNewChat()" color="primary">
