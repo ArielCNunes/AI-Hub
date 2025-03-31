@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, IonicModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   email: string = '';

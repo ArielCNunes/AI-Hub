@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
   standalone: true,
   imports: [FormsModule, IonicModule, CommonModule, RouterLink]
 })

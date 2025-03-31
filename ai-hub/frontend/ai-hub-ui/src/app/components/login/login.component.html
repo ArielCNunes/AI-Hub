@@ -1,47 +1,39 @@
-<ion-content class="ion-padding">
-    <div class="login-container">
-        <ion-card>
-            <ion-card-header>
-                <ion-card-title>Login</ion-card-title>
-            </ion-card-header>
+<ion-content class="login-content">
+    <ion-card class="login-card">
+        <ion-card-header>
+            <ion-card-title>Login</ion-card-title>
+        </ion-card-header>
 
-            <ion-card-content>
-                <form (ngSubmit)="login()" #loginForm="ngForm">
+        <ion-card-content>
+            <form (ngSubmit)="login()" #loginForm="ngForm">
+                <!-- Email Input -->
+                <ion-item class="login-item">
+                    <ion-input type="email" [(ngModel)]="email" name="email" placeholder="Email" required
+                        clearInput></ion-input>
+                </ion-item>
 
-                    <!-- Email Input -->
-                    <ion-item>
-                        <ion-label position="floating">Email</ion-label>
-                        <ion-input type="email" [(ngModel)]="email" name="email" required clearInput>
-                        </ion-input>
-                    </ion-item>
+                <!-- Password Input -->
+                <ion-item class="login-item">
+                    <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password" required
+                        clearInput></ion-input>
+                </ion-item>
 
-                    <!-- Password Input -->
-                    <ion-item>
-                        <ion-label position="floating">Password</ion-label>
-                        <ion-input type="password" [(ngModel)]="password" name="password" required clearInput>
-                        </ion-input>
-                    </ion-item>
+                <!-- Error Message -->
+                <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-                    <!-- Error Message -->
-                    <p *ngIf="errorMessage" class="error-message">
-                        {{ errorMessage }}
-                    </p>
+                <!-- Login Button -->
+                <ion-button expand="block" type="submit" [disabled]="!loginForm.valid" class="login-button">
+                    Login
+                </ion-button>
 
-                    <!-- Login Button -->
-                    <ion-button expand="block" type="submit" color="primary" [disabled]="!loginForm.valid">
-                        Login
+                <!-- Sign Up Link -->
+                <div class="signup-link">
+                    <p>Don't have an account?</p>
+                    <ion-button fill="clear" routerLink="/signup" size="small">
+                        Sign up
                     </ion-button>
-
-                    <!-- Sign Up Link -->
-                    <div class="signup-link">
-                        <p>Don't have an account?
-                            <ion-button fill="clear" routerLink="/signup" color="secondary">
-                                Sign up
-                            </ion-button>
-                        </p>
-                    </div>
-                </form>
-            </ion-card-content>
-        </ion-card>
-    </div>
+                </div>
+            </form>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
