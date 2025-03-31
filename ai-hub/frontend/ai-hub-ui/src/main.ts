@@ -14,7 +14,6 @@ initializeApp(firebaseEnvironment.firebaseConfig);
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideRouter([]),
     provideRouter(routes),
     provideIonicAngular(),
     provideHttpClient(),
