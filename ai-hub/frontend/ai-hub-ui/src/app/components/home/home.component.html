@@ -1,18 +1,19 @@
 <ion-content class="home-content">
     <!-- Conversations list -->
-    <ion-list>
-        <ion-item *ngFor="let conv of conversations"
+    <ion-list class="conversation-list">
+        <ion-item *ngFor="let conv of conversations" class="conversation-item"
             (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })">
             <ion-label>
                 <h2>{{ conv.title }}</h2>
-                <p style="color: blue;" *ngIf="conv.summary"><b></b> {{ conv.summary }}</p>
-                <p>Started on {{ conv.createdAt | date: 'short' }}</p>
-                <ion-chip *ngIf="conv.tokens > 0" color="warning" style="margin-top: 4px;">
+                <p class="conversation-summary" *ngIf="conv.summary">{{ conv.summary }}</p>
+                <p class="conversation-date">Started on {{ conv.createdAt | date: 'short' }}</p>
+
+                <ion-chip *ngIf="conv.tokens > 0" color="warning">
                     <ion-icon name="flame-outline" color="warning"></ion-icon>
                     <ion-label>{{ conv.tokens | number }} tokens used</ion-label>
                 </ion-chip>
             </ion-label>
-            <ion-icon slot="end"></ion-icon>
+
             <ion-button fill="clear" slot="end" color="danger"
                 (click)="deleteConversation(conv._id); $event.stopPropagation();">
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
@@ -20,14 +21,14 @@
         </ion-item>
     </ion-list>
 
-    <!-- Message to be displayed when there are no chats -->
-    <ion-text color="medium" *ngIf="conversations.length === 0">
-        <p style="text-align: center; margin-top: 2rem;">No conversations yet. Start a new chat!</p>
+    <!-- No conversations message -->
+    <ion-text *ngIf="conversations.length === 0" class="no-conversations">
+        <p>No conversations yet. Start a new chat!</p>
     </ion-text>
 
-    <!-- New chat button -->
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="startNewChat()" color="primary">
+    <!-- Centered New chat button -->
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button (click)="startNewChat()">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>

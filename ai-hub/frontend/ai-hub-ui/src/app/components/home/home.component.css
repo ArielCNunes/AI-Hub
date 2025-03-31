@@ -1,32 +1,68 @@
-/* Style for chat list items */
-ion-item {
-    --background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    --padding-start: 16px;
-    --inner-padding-end: 16px;
-    --min-height: 72px;
+/* =======================
+   Home (Chat) Page Styles
+   ======================= */
+
+.home-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 16px;
+    min-height: 100vh;
+    --background: var(--ion-background-color);
+}
+
+.conversation-list {
+    width: 100%;
+}
+
+.conversation-item {
+    --background: var(--card-bg);
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: none;
+    --inner-border-width: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: var(--ion-text-color);
+}
+
+.conversation-summary {
+    color: lightblue;
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+.conversation-date {
+    color: #aaa;
+    font-size: 0.85rem;
+    margin-top: 4px;
 }
 
 ion-label h2 {
     font-size: 1.2rem;
     font-weight: 600;
     margin: 0;
-    color: #111;
+    color: var(--ion-text-color);
 }
 
-ion-label p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 4px;
+.no-conversations {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1rem;
+    opacity: 0.5;
+    color: var(--ion-text-color);
 }
 
-/* new chat button */
+/* New chat button */
 ion-fab-button {
-    --background: #3880ff;
+    --background: var(--primary-color);
     --color: #fff;
     z-index: 9999;
 }
 
 ion-fab {
     position: fixed;
+    padding-bottom: 15px;
 }
