@@ -1,4 +1,4 @@
-<ion-content class="chat-content">
+<ion-content [scrollY]="true" class="chat-content">
     <div class="messages">
         <div *ngFor="let message of chatHistory" [ngClass]="message.role" class="message-bubble">
             <ion-card>
@@ -14,17 +14,17 @@
 
 <ion-footer>
     <ion-toolbar>
-        <ion-item>
-            <ion-label>Choose an AI model</ion-label>
-            <ion-select [(ngModel)]="selectedAIModel" interface="popover"
+        <ion-item lines="none">
+            <ion-label slot="start">Choose an AI model</ion-label>
+            <ion-select [(ngModel)]="selectedAIModel" interface="popover" slot="end"
                 (ionChange)="updateAIModel($event.detail.value)">
                 <ion-select-option value="openai">Chat GPT</ion-select-option>
                 <ion-select-option value="claude">Claude</ion-select-option>
             </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
             <ion-input type="text" [(ngModel)]="userMessage" placeholder="Type a message..." class="message-input"
-                (keyup.enter)="sendMessage(selectedAIModel)">
+                aria-label="Send message" expand="block" (keyup.enter)="sendMessage(selectedAIModel)">
             </ion-input>
             <ion-button slot="end" (click)="sendMessage(selectedAIModel)" color="black">
                 <ion-icon name="send"></ion-icon>

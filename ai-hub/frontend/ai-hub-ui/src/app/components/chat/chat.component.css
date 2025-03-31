@@ -1,12 +1,17 @@
+.chat-content {
+    --background: var(--ion-background-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .messages {
     padding: 10px;
     display: flex;
     flex-direction: column;
     padding-bottom: 80px;
-    /* Padding to accommodate the dropdown and input field */
     overflow-y: auto;
-    max-height: calc(100vh - 150px);
-    /* Ensure messages don't overflow the screen */
+    flex-grow: 1;
 }
 
 .messages::-webkit-scrollbar {
@@ -32,61 +37,62 @@
     max-width: 80%;
     margin: 0;
     border-radius: 10px;
-    box-shadow: 20px 20px 60px #c4c3c3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .user ion-card {
-    background-color: #ffffff;
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
 
 .assistant ion-card {
-    background-color: #050505;
+    background-color: #2a2a2a;
     color: #ffffff;
 }
 
 .message-bubble:last-child {
-    margin-bottom: 5px;
-    /* Avoid overlapping with footer elements */
+    margin-bottom: 55%;
 }
 
 ion-footer {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     z-index: 10;
-    background-color: white;
-    /* Ensure the footer is not transparent */
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
 }
 
 ion-toolbar {
     --padding-top: 0;
     --padding-bottom: 0;
+    --background: #1a1a1a;
+    color: #fff;
 }
 
 ion-item {
+    --background: #1a1a1a;
+    --color: var(--ion-text-color);
     --padding-start: 16px;
     --padding-end: 16px;
     --padding-top: 8px;
     --padding-bottom: 8px;
     flex: 1;
-    /* Ensure dropdown and input share space */
 }
 
 ion-input {
-    --background: #ebe5e5;
+    --background: #2a2a2a;
     --border-radius: 8px;
     --padding-start: 20px;
+    color: #fff;
     flex: 1;
 }
 
 ion-button {
     --padding-top: 8px;
     --padding-bottom: 8px;
-    background-color: black;
+    --background: var(--primary-color);
+    --color: #fff;
     flex-shrink: 0;
-}
-
-ion-select {
-    /* Drop down menu doesn't overlap other elements */
-    flex: 0.5;
 }
