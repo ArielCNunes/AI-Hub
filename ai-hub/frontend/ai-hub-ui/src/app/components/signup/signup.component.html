@@ -1,27 +1,26 @@
 <ion-content class="signup-content">
     <div class="signup-container">
-        <ion-card class="login-card">
+        <ion-card class="signup-card">
             <ion-card-header>
                 <ion-card-title>Sign Up</ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
                 <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-
                     <!-- Email -->
-                    <ion-item class="login-item">
+                    <ion-item class="signup-item">
                         <ion-input type="email" name="email" [(ngModel)]="email" required placeholder="Email"
                             clearInput></ion-input>
                     </ion-item>
 
                     <!-- Password -->
-                    <ion-item class="login-item">
+                    <ion-item class="signup-item">
                         <ion-input type="password" name="password" [(ngModel)]="password" required
                             placeholder="Password" clearInput></ion-input>
                     </ion-item>
 
                     <!-- Confirm Password -->
-                    <ion-item class="login-item">
+                    <ion-item class="signup-item">
                         <ion-input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required
                             placeholder="Confirm Password" clearInput></ion-input>
                     </ion-item>
@@ -30,12 +29,12 @@
                     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
                     <!-- Submit Button -->
-                    <ion-button expand="block" type="submit" [disabled]="!signupForm.form.valid" class="login-button">
+                    <ion-button expand="block" type="submit" [disabled]="!signupForm.form.valid" class="signup-button">
                         Sign Up
                     </ion-button>
 
                     <!-- Login Link -->
-                    <div class="signup-link">
+                    <div class="login-link">
                         <p>Already have an account?</p>
                         <ion-button fill="clear" routerLink="/login" size="small">
                             Log in

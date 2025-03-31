@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   standalone: true,
+  styleUrls: ['./signup.component.css'],
   imports: [FormsModule, IonicModule, CommonModule, RouterLink]
 })
 export class SignupComponent {
