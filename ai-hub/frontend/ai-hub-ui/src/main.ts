@@ -7,6 +7,8 @@ import { provideIonicAngular } from'@ionic/angular/standalone';
 import { IonicRouteStrategy } from '@ionic/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { initializeApp } from 'firebase/app';
+import { isDevMode } from '@angular/core';
+import { provideServiceWorker } from '@angular/service-worker';
 
 // Initialize Firebase
 initializeApp(firebaseEnvironment.firebaseConfig);
@@ -16,6 +18,12 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideRouter(routes),
     provideIonicAngular(),
-    provideHttpClient(),
+    provideHttpClient(), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 }).catch(err => console.error(err));
