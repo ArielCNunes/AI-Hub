@@ -4,11 +4,13 @@
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
   "lang": "en",
   "description": "AI Hub - Chat with multiple AI models easily.",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
+  "id": "/?source=pwa",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
