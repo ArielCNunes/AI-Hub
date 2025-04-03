@@ -1,6 +1,7 @@
 .centered-title {
   width: 100%;
-  text-align: center;
+  justify-content: center;
+  display: flex;
   font-size: 1.5rem;
   font-weight: bold;
 }
