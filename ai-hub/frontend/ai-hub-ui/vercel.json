@@ -4,7 +4,7 @@
             "src": "ai-hub/frontend/ai-hub-ui/angular.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": "ai-hub/frontend/ai-hub-ui/dist/browser"
+                "distDir": "dist/browser"
             }
         }
     ],
