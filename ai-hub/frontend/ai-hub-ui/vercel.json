@@ -1,0 +1,17 @@
+{
+    "builds": [
+        {
+            "src": "ai-hub/frontend/angular.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "ai-hub/frontend/dist/ai-hub-ui"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ]
+}
