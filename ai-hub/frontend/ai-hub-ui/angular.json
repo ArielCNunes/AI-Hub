@@ -22,8 +22,11 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
-              "src/manifest.webmanifest",
-              "src/icons"
+              {
+                "glob": "**/*",
+                "input": "src/public",
+                "output": "."
+              }
             ],
             "styles": [
               "src/styles.css"
