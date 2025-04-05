@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class ClaudeService {
-    private apiUrl = 'http://localhost:5001/api/claude';
+    private apiUrl = 'https://ai-hub-doml.onrender.com/api/claude';
 
     constructor(private http: HttpClient) { }
 

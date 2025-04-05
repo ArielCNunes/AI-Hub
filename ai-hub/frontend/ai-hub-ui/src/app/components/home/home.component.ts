@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
     if (this.user) {
-      this.http.get<any[]>(`http://localhost:5001/api/conversations?userId=${this.user.uid}`)
+      this.http.get<any[]>(`https://ai-hub-doml.onrender.com/api/conversations?userId=${this.user.uid}`)
         .subscribe(convs => {
           this.conversations = convs;
         });
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   // Creates a new conversation and navigates to chat page
   startNewChat() {
     if (this.user) {
-      this.http.post<any>('http://localhost:5001/api/conversations', {
+      this.http.post<any>('https://ai-hub-doml.onrender.com/api/conversations', {
         userId: this.user.uid,
         aiModel: 'openai'
       })
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
           text: 'Delete',
           role: 'destructive',
           handler: () => {
-            this.http.delete(`http://localhost:5001/api/conversations/${conversationId}`)
+            this.http.delete(`https://ai-hub-doml.onrender.com/api/conversations/${conversationId}`)
               .subscribe({
                 next: () => {
                   this.conversations = this.conversations.filter(conv => conv._id !== conversationId);

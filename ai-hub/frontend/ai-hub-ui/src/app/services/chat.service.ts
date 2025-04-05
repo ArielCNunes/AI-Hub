@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 
 export class ChatService {
-    private apiUrl = 'http://localhost:5000/api/chats';
+    private apiUrl = 'https://ai-hub-doml.onrender.com/api/chats';
 
     constructor(private http: HttpClient) { }
 

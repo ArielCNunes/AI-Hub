@@ -122,14 +122,14 @@ export class ChatComponent {
       tokens
     };
 
-    this.http.post('http://localhost:5001/api/chats', chatData).subscribe({
+    this.http.post('https://ai-hub-doml.onrender.com/api/chats', chatData).subscribe({
       next: () => console.log('Chat saved successfully. Model:' + this.selectedAIModel),
       error: (err) => console.error('Failed to save chat:', err)
     });
   }
 
   loadChatHistory() {
-    this.http.get<any[]>(`http://localhost:5001/api/chats?userId=${this.userId}&conversationId=${this.conversationId}`).subscribe({
+    this.http.get<any[]>(`https://ai-hub-doml.onrender.com/api/chats?userId=${this.userId}&conversationId=${this.conversationId}`).subscribe({
       next: (chats) => {
         this.chatHistory = chats.map(chat => [
           { role: 'user', content: chat.message },
@@ -143,7 +143,7 @@ export class ChatComponent {
   private updateConversationTitle(title: string) {
     if (!this.conversationId) return;
 
-    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { title }).subscribe({
+    this.http.patch(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`, { title }).subscribe({
       next: () => console.log('Conversation title updated'),
       error: (err) => console.error('Failed to update conversation title:', err)
     });
@@ -185,7 +185,7 @@ export class ChatComponent {
     if (!this.conversationId) return;
 
     // API call to update conversation summary in backend
-    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, { summary }).subscribe({
+    this.http.patch(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`, { summary }).subscribe({
       next: () => console.log('Summary saved'),
       error: (err) => console.error('Failed to save summary:', err)
     });
@@ -194,7 +194,7 @@ export class ChatComponent {
   private loadConversationInfo() {
     if (!this.conversationId) return;
 
-    this.http.get<any>(`http://localhost:5001/api/conversations/${this.conversationId}`).subscribe({
+    this.http.get<any>(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`).subscribe({
       next: (conversation) => {
         this.selectedAIModel = conversation.aiModel || 'openai';
       },
@@ -209,7 +209,7 @@ export class ChatComponent {
 
     if (!this.conversationId) return;
 
-    this.http.patch(`http://localhost:5001/api/conversations/${this.conversationId}`, {
+    this.http.patch(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`, {
       aiModel: model
     }).subscribe({
       next: () => console.log('AI model updated to:', model),
