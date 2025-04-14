@@ -1,17 +1,21 @@
+// Import required modules and models
 const express = require('express');
+// Create a new router instance for handling conversation routes
 const router = express.Router();
 const Conversation = require('../models/Conversation');
 const Chat = require('../models/Chat');
 
-// Create a new conversation
+// Create a new conversation for the specified user and AI model
 router.post('/', async (req, res) => {
     const { userId, aiModel } = req.body;
 
+    // Validate required fields in the request body
     if (!userId) {
         return res.status(400).json({ error: 'User ID is required.' });
     }
 
     try {
+        // Create a new conversation instance
         const conversation = new Conversation({ userId, aiModel });
         await conversation.save();
         res.status(201).json(conversation);
@@ -20,7 +24,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Get all conversations for a user
+// Get all conversations for a specific user
 router.get('/', async (req, res) => {
     const { userId } = req.query;
 
@@ -36,13 +40,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-// This route updates the title and/or summary of a conversation identified by its ID
+// Update title, summary, or model for a conversation by ID
 router.patch('/:id', async (req, res) => {
     // Extracting route parameters and request body
     const { id } = req.params;
     const { title, summary, aiModel } = req.body;
 
-    // Preparing fields to update
+    // Build the update object with only the fields provided
     try {
         const updateFields = {};
         if (title !== undefined) updateFields.title = title;
@@ -59,7 +63,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-// Get a single conversation by ID
+// Get a single conversation by its ID
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -73,7 +77,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Delete a conversation and its associated chats
+// Delete a conversation and all associated chat messages
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -89,4 +93,5 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Export the router for use in the main server file
 module.exports = router;
