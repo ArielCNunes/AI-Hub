@@ -16,14 +16,14 @@ import { add, trashOutline, flameOutline } from 'ionicons/icons';
   imports: [IonicModule, RouterModule, CommonModule]
 })
 export class HomeComponent implements OnInit {
-  user: any = null; // Stores current user info
+  user: any = null; // Store current user info
   conversations: any[] = [];
 
   constructor(private authService: AuthService, public router: Router, private http: HttpClient, private alertController: AlertController) {
     addIcons({ add, trashOutline, flameOutline });
   }
 
-  // On component initialisation, load user and fetch conversations
+  // Loads the authenticated user and fetches their saved conversations from the backend.
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
     if (this.user) {
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // Creates a new conversation and navigates to chat page
+  // Creates a new conversation for the current user using the OpenAI model and navigates to the chat view.
   startNewChat() {
     if (this.user) {
       this.http.post<any>('https://ai-hub-doml.onrender.com/api/conversations', {
@@ -50,8 +50,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Shows a confirmation alert and deletes the selected conversation from the backend if confirmed.
+  // Updates the UI by removing the deleted conversation from the list.
   async deleteConversation(conversationId: string) {
     const alert = await this.alertController.create({
+      // Create an alert to confirm deletion
       header: 'Delete Chat',
       message: 'Are you sure you want to delete this conversation?',
       buttons: [
@@ -63,6 +66,7 @@ export class HomeComponent implements OnInit {
           text: 'Delete',
           role: 'destructive',
           handler: () => {
+            // Make a DELETE request to the backend to delete the conversation
             this.http.delete(`https://ai-hub-doml.onrender.com/api/conversations/${conversationId}`)
               .subscribe({
                 next: () => {
@@ -75,7 +79,6 @@ export class HomeComponent implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 }

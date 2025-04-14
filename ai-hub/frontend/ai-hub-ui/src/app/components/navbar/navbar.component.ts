@@ -13,8 +13,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  // Injects AuthService for authentication control and Router for navigation
   constructor(private authService: AuthService, private router: Router) { }
 
+  // Logs the user out and redirects to the login page
   logout(): void {
     this.authService.signOut().then(() => {
       this.router.navigate(['/login']);  // Redirect to login page after logout
@@ -23,6 +25,7 @@ export class NavbarComponent {
     });
   }
 
+  // Returns true if a user is currently logged in
   get isLoggedIn(): boolean {
     return this.authService.getCurrentUser() !== null;
   }

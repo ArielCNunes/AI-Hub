@@ -1,10 +1,13 @@
+<!-- Navbar header with title and navigation buttons -->
 <ion-header>
     <ion-toolbar>
         <ion-title class="centered-title">AI-Hub</ion-title>
     </ion-toolbar>
+    <!-- Navigation buttons: Home and Logout (if user is logged in) -->
     <ion-toolbar>
         <ion-buttons class="centered-buttons">
             <ion-button routerLink="/home">Home</ion-button>
+            <!-- Logout button is only shown when user is logged in -->
             <ion-button *ngIf="isLoggedIn" (click)="logout()">Logout</ion-button>
         </ion-buttons>
     </ion-toolbar>

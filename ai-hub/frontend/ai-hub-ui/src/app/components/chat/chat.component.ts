@@ -34,7 +34,8 @@ export class ChatComponent {
   ) {
     addIcons({ send });
 
-    // Set the selected AI model
+    // Set the selected AI model on component initialization
+    // This will be used to determine which AI model to use for the conversation
     this.route.queryParams.subscribe(params => {
       this.selectedAIModel = params['model'] || 'openai';
       this.conversationId = params['conversationId'] || null;
@@ -42,9 +43,12 @@ export class ChatComponent {
   }
 
   ngOnInit() {
+    // Get the current user ID from the AuthService
     const currentUser = this.authService.getCurrentUser();
     this.userId = currentUser?.uid || null;
 
+    // Check if the user is logged in
+    // If logged in, load the chat history and conversation info (AI model)
     if (this.userId) {
       this.loadChatHistory();
       this.loadConversationInfo();
@@ -55,12 +59,14 @@ export class ChatComponent {
 
   // Send message to AI model
   sendMessage(selectedAIModel: string) {
-    if (!this.userMessage.trim()) return;
+    if (!this.userMessage.trim()) return; // Prevent sending empty messages
 
+    // Add the user's message to the chat history
     this.chatHistory.push({ role: 'user', content: this.userMessage });
     const userMessage = this.userMessage;
     this.userMessage = '';
 
+    // Check if the conversation is new and update the title
     if (this.chatHistory.length === 1) {
       const title = userMessage.length > 50 ? userMessage.slice(0, 47) + '...' : userMessage;
       this.updateConversationTitle(title);
@@ -72,7 +78,7 @@ export class ChatComponent {
       this.claudeService.sendMessage(userMessage).subscribe({
         // Handling the response from Claude
         next: (res) => {
-          // Extracting the message from Claude's response
+          // Extracting the message from Claude's response and adding it to chat history
           const aiMessage = res?.content?.[0]?.text || 'No response from Claude';
           this.chatHistory.push({ role: 'assistant', content: aiMessage });
 
@@ -94,7 +100,7 @@ export class ChatComponent {
       this.openAIService.sendMessage(userMessage).subscribe({
         // Handling the response from OpenAI
         next: (response) => {
-          // Extracting the message from OpenAI's response
+          // Extracting the message and tokens from OpenAI's response
           const aiMessage = response.message;
           const tokens = response.tokens;
           this.chatHistory.push({ role: 'assistant', content: aiMessage });
@@ -113,6 +119,7 @@ export class ChatComponent {
     }
   }
 
+  // Save chat message and response to the backend
   private saveChat(message: string, response: string, tokens: number = 0) {
     const chatData = {
       userId: this.userId,
@@ -122,27 +129,34 @@ export class ChatComponent {
       tokens
     };
 
+    // API call to save chat data in the backend
+    // This will save the chat message, response, and tokens to the database
     this.http.post('https://ai-hub-doml.onrender.com/api/chats', chatData).subscribe({
       next: () => console.log('Chat saved successfully. Model:' + this.selectedAIModel),
       error: (err) => console.error('Failed to save chat:', err)
     });
   }
 
+  // Load chat history from the backend
+  // This will fetch the chat history for the current user and conversation
   loadChatHistory() {
     this.http.get<any[]>(`https://ai-hub-doml.onrender.com/api/chats?userId=${this.userId}&conversationId=${this.conversationId}`).subscribe({
       next: (chats) => {
         this.chatHistory = chats.map(chat => [
           { role: 'user', content: chat.message },
           { role: 'assistant', content: chat.response }
-        ]).flat();
+        ]).flat(); // Flatten the array of chat messages
       },
       error: (err) => console.error('Failed to load chat history:', err)
     });
   }
 
+  // Update the title of the conversation in the backend
+  // This will be called when the user sends the first message in a new conversation
   private updateConversationTitle(title: string) {
     if (!this.conversationId) return;
 
+    // API call to update conversation title in backend
     this.http.patch(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`, { title }).subscribe({
       next: () => console.log('Conversation title updated'),
       error: (err) => console.error('Failed to update conversation title:', err)
@@ -158,10 +172,10 @@ export class ChatComponent {
       "Start with 'User wants to...' or 'User asked about...' (a variation of these)'" +
       "Limit to 10 words and do not include your response.";
 
-    // Combine the system prompt with the chat history
+    // Prepare the messages for OpenAI
     const messages = [
       { role: 'system', content: systemPrompt },
-      ...this.chatHistory
+      ...this.chatHistory // Include the chat history
     ];
 
     // Send the prompt and history to OpenAI and subscribe to the response
@@ -191,9 +205,11 @@ export class ChatComponent {
     });
   }
 
+  // Load conversation info from the backend
   private loadConversationInfo() {
     if (!this.conversationId) return;
 
+    // API call to get AI model
     this.http.get<any>(`https://ai-hub-doml.onrender.com/api/conversations/${this.conversationId}`).subscribe({
       next: (conversation) => {
         this.selectedAIModel = conversation.aiModel || 'openai';
@@ -204,6 +220,7 @@ export class ChatComponent {
     });
   }
 
+  // Update the AI model for the current conversation
   public updateAIModel(model: string) {
     this.selectedAIModel = model;
 

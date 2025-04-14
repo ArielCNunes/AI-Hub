@@ -10,6 +10,7 @@ export class ClaudeService {
 
     constructor(private http: HttpClient) { }
 
+    // Method to send a message to the Claude API (through the backend)
     sendMessage(message: string): Observable<any> {
         return this.http.post<any>(this.apiUrl, { prompt: message });
     }

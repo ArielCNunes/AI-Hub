@@ -1,5 +1,7 @@
+<!-- Scrollable chat container -->
 <ion-content [scrollY]="true" class="chat-content">
     <div class="messages">
+        <!-- Display each message with role-specific position and styling -->
         <div *ngFor="let message of chatHistory" [ngClass]="message.role" class="message-bubble">
             <ion-card>
                 <ion-card-content>
@@ -12,10 +14,12 @@
     </div>
 </ion-content>
 
+<!-- Message input area with AI model selector and send button -->
 <ion-footer>
     <ion-toolbar>
         <ion-item lines="none">
             <ion-label slot="start">Choose an AI model</ion-label>
+            <!-- Dropdown to choose between AI models -->
             <ion-select [(ngModel)]="selectedAIModel" interface="popover" slot="end"
                 (ionChange)="updateAIModel($event.detail.value)">
                 <ion-select-option value="openai">Chat GPT</ion-select-option>
@@ -23,6 +27,7 @@
             </ion-select>
         </ion-item>
         <ion-item lines="none">
+            <!-- Input field to type messages -->
             <ion-input type="text" [(ngModel)]="userMessage" placeholder="Type a message..." class="message-input"
                 aria-label="Send message" expand="block" (keyup.enter)="sendMessage(selectedAIModel)">
             </ion-input>

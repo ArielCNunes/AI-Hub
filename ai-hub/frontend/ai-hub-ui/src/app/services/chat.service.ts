@@ -11,7 +11,7 @@ export class ChatService {
 
     constructor(private http: HttpClient) { }
 
-    // Fetch all chats
+    // Get all chats from the backend
     getChats(): Observable<any[]> {
         return this.http.get<any[]>(this.apiUrl);
     }

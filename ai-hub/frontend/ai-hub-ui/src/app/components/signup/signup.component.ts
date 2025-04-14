@@ -20,6 +20,7 @@ export class SignupComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  // Method to handle form submission
   async onSubmit() {
     this.email = this.email.trim();
 

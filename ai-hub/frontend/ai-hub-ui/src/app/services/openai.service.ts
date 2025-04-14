@@ -13,17 +13,21 @@ export class OpenAIService {
 
   constructor(private http: HttpClient) { }
 
+  // Sends a single user message to OpenAI and returns the reply and token count.
   sendMessage(message: string): Observable<any> {
+    // Define the body structure with model and messages
     const body = {
-      model: 'gpt-3.5-turbo', // Or 'gpt-4' if you have access
+      model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: message }]
     };
 
+    // Set headers for the request
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.apiKey}`
     };
 
+    // Send the POST request to OpenAI API
     return this.http.post<any>(this.apiUrl, body, { headers }).pipe(
       map(res => ({
         message: res.choices[0].message.content,
@@ -49,6 +53,7 @@ export class OpenAIService {
       'Authorization': `Bearer ${this.apiKey}`
     };
 
+    // Send the POST request to OpenAI API
     return this.http.post(this.apiUrl, body, { headers });
   }
 }

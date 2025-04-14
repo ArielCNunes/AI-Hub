@@ -1,6 +1,7 @@
 <ion-content class="home-content">
-    <!-- Conversations list -->
+    <!-- Displays the list of saved conversations -->
     <ion-list class="conversation-list">
+        <!-- Each conversation item navigates to its chat view on click -->
         <ion-item *ngFor="let conv of conversations" class="conversation-item"
             (click)="router.navigate(['/chat'], { queryParams: { conversationId: conv._id } })">
             <ion-label>
@@ -8,12 +9,14 @@
                 <p class="conversation-summary" *ngIf="conv.summary">{{ conv.summary }}</p>
                 <p class="conversation-date">Started on {{ conv.createdAt | date: 'short' }}</p>
 
+                <!-- Shows token usage if available -->
                 <ion-chip *ngIf="conv.tokens > 0" color="warning">
                     <ion-icon name="flame-outline" color="warning"></ion-icon>
                     <ion-label>{{ conv.tokens | number }} tokens used</ion-label>
                 </ion-chip>
             </ion-label>
 
+            <!-- Delete button for the conversation -->
             <ion-button fill="clear" slot="end" color="danger"
                 (click)="deleteConversation(conv._id); $event.stopPropagation();">
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
@@ -21,12 +24,12 @@
         </ion-item>
     </ion-list>
 
-    <!-- No conversations message -->
+    <!-- Message shown when there are no conversations -->
     <ion-text *ngIf="conversations.length === 0" class="no-conversations">
         <p>No conversations yet. Start a new chat!</p>
     </ion-text>
 
-    <!-- Centered New chat button -->
+    <!-- Floating action button to start a new conversation -->
     <ion-fab vertical="bottom" horizontal="center" slot="fixed">
         <ion-fab-button (click)="startNewChat()">
             <ion-icon name="add"></ion-icon>

@@ -25,7 +25,8 @@ export class AuthService {
             });
     }
 
-    // User Sign Up
+    // Creates a new user account with the provided email and password using Firebase Authentication.
+    // Returns the created user or a detailed error message if registration fails.
     async signUp(email: string, password: string): Promise<{ user: User | null; error?: string }> {
         try {
             // Create and return user with email and password
@@ -47,7 +48,8 @@ export class AuthService {
         }
     }
 
-    // User Sign In
+    // Signs in an existing user using their email and password via Firebase Authentication.
+    // Returns the authenticated user or a descriptive error message if login fails.
     async signIn(email: string, password: string): Promise<{ user: User | null; error?: string }> {
         try {
             const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -74,7 +76,7 @@ export class AuthService {
         }
     }
 
-    // User Sign Out
+    // Logs out the current user from Firebase Authentication.
     async signOut(): Promise<void> {
         try {
             await signOut(this.auth);
@@ -83,7 +85,8 @@ export class AuthService {
         }
     }
 
-    // Check if email is already registered
+    // Checks if an email is already registered in Firebase Authentication.
+    // Returns true if the email has sign-in methods associated with it; false otherwise.
     async isEmailTaken(email: string): Promise<boolean> {
         try {
             // Check if email is already in use
@@ -100,7 +103,8 @@ export class AuthService {
         }
     }
 
-    // Get Current User
+    // Returns the currently authenticated user stored in the service.
+    // May return null if no user is logged in.
     getCurrentUser(): User | null {
         return this.currentUser;
     }

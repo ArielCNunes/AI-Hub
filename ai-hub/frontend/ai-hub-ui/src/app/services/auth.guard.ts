@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+  // This guard checks if the user is logged in before allowing access to certain routes
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): boolean {

@@ -22,7 +22,7 @@ export class LoginComponent {
   async login() {
     this.email = this.email.trim();
 
-    // Check if email exists
+    // Check if email input is empty
     if (!this.email) {
       this.errorMessage = 'Email cannot be empty.';
       return;
@@ -35,7 +35,7 @@ export class LoginComponent {
       return;
     }
 
-    // Check if password exists
+    // Check if password input is empty
     if (!this.password) {
       this.errorMessage = 'Password cannot be empty.';
       return;
@@ -48,8 +48,8 @@ export class LoginComponent {
     }
 
     // Log in user
-    const result = await this.authService.signIn(this.email, this.password);
-    if (result.user) {
+    const result = await this.authService.signIn(this.email, this.password); // Call signIn method from AuthService
+    if (result.user) { // Check if user has been logged in
       this.router.navigate(['/home']);
     } else {
       this.errorMessage = result.error || 'Sign in failed. Please try again.';
