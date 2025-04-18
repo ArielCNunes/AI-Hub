@@ -1,21 +1,47 @@
-# AI-Hub
+**AI Hub** is a full-stack web application that allows users to interact with different AI models, save conversations, and manage their own personal AI assistant experience. The app provides user authentication, persistent chat history, and a sleek modern UI using Angular and Ionic.
 
-This project is a web application that allows users to choose different AI models to interact with. It provides authentication, conversation history storage, and a user-friendly interface.
+## 🚀 Features
 
-## Technologies Used
+- 🔐 User Authentication (via Firebase)
+- 💬 Multi-model AI Chat Interface
+- 🧠 Chat history saved in MongoDB (per user)
+- 📱 Responsive UI built with Ionic Framework
+- 📂 Organized project structure with clean modular code
 
-The tech stack for this project includes:
+---
 
-### Frontend
-- **Angular** with **TypeScript** – for the front-end development.
-- **Ionic** – for UI components and responsiveness.
-- **Axios** – for handling HTTP communication between the frontend and backend.
+## 🛠 Tech Stack
 
-### Backend
-- **Express.js** running on **Node.js** – to handle HTTP requests and API calls.
+### 🔸 Frontend
+- [Angular](https://angular.io/) (TypeScript)
+- [Ionic](https://ionicframework.com/)
+- [Axios](https://axios-http.com/) (API communication)
 
-### Authentication
-- **Firebase** – for user authentication and registration.
+### 🔸 Backend
+- [Node.js](https://nodejs.org/)
+- [Express.js](https://expressjs.com/)
 
-### Database
-- **MongoDB** – for saving and retrieving chat history (hosted on **MongoDB Atlas**).
+### 🔸 Authentication
+- [Firebase Authentication](https://firebase.google.com/docs/auth)
+
+### 🔸 Database
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (cloud-hosted)
+
+---
+
+## 📁 Project Structure
+
+```
+AI-Hub/
+├── ai-hub/
+│   ├── backend/               # Express.js API
+│   │   ├── models/            # Mongoose schemas for Chat and Conversation
+│   │   ├── routes/            # API endpoints
+│   │   └── server.js          # Entry point
+│   └── frontend/              # Angular + Ionic application
+├── .vscode/                   # Editor configuration
+├── package.json               # Root package config
+└── README.md
+```
+
+---
